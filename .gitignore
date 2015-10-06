@@ -1,0 +1,13 @@
+node_modules/
+coverage/
+*.log
+
+.idea/
+*.iml
+*.iws
+
+.settings/
+.project
+.classpath
+
+.DS_Store
