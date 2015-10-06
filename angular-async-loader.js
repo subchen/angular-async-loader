@@ -9,7 +9,7 @@
     function factory(angular, undefined) {
 
         return {
-            VERSION: '1.0.0',
+            VERSION: '1.0.1',
 
             configure: function (app) {
 
@@ -54,41 +54,72 @@
                     var $filterProvider = $asyncLoader.$filterProvider;
 
                     app.value = function (name, value) {
-                        $provide.value.apply(null, [name, value]);
+                        $provide.value(name, value);
+                        return app;
                     };
 
                     app.constant = function (name, value) {
-                        $provide.value.apply(null, [name, value]);
+                        $provide.constant(name, value);
+                        return app;
                     };
 
                     app.factory = function (name, factory) {
-                        $provide.factory.apply(null, [name, factory]);
+                        $provide.factory(name, factory);
+                        return app;
                     };
 
                     app.service = function (name, service) {
-                        $provide.service.apply(null, [name, service]);
+                        $provide.service(name, service);
+                        return app;
                     };
 
                     app.filter = function (name, filter) {
-                        $filterProvider.register.apply(null, [name, filter]);
+                        $filterProvider.register(name, filter);
+                        return app;
                     };
 
                     app.directive = function (name, directive) {
-                        $compileProvider.directive.apply(null, [name, directive]);
+                        $compileProvider.directive(name, directive);
+                        return app;
                     };
 
                     app.controller = function (name, controller) {
-                        $controllerProvider.register.apply(null, [name, controller]);
+                        $controllerProvider.register(name, controller);
+                        return app;
                     };
 
                     app.decorator = function (name, decorator) {
-                        $provide.decorator.apply(null, [name, decorator]);
+                        $provide.decorator(name, decorator);
+                        return app;
                     };
 
                     app.provider = function (name, service) {
-                        $provide.provider.apply(null, [name, service]);
+                        $provide.provider(name, service);
+                        return app;
                     };
                 }]);
+
+
+                /**
+                 * Generate $routeProvider.route or $stateProvider.state.
+                 *
+                 * Populate the resolve attribute using either 'controllerUrl'.
+                 *
+                 * @param config {Object}
+                 * @returns the modified config
+                 */
+                app.route = function (config) {
+                    var controllerUrl = config.controllerUrl;
+                    if (controllerUrl !== undefined) {
+                        delete config.controllerUrl;
+
+                        var resolve = config.resolve || {};
+                        resolve.dummyController = app.load(controllerUrl);
+                        config.resolve = resolve;
+                    }
+
+                    return config;
+                };
 
 
                 /**

@@ -1,6 +1,6 @@
 {
   "name": "angular-async-loader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "async loader for angular 1.x",
   "author": {
     "name": "Guoqiang Chen",

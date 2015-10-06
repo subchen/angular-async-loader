@@ -7,16 +7,16 @@ async loader for angular 1.x.
 
 Support following components to dynamic register:
 
-* controller
-* services
-* filter
-* directive
-* value
-* constant
-* provider
-* decorator
+* .controller
+* .services
+* .filter
+* .directive
+* .value
+* .constant
+* .provider
+* .decorator
 
-And we can use following loader:
+And we can use following loaders:
 
 * Require.js
 * Sea.js
@@ -35,7 +35,7 @@ See Sample: https://github.com/subchen/angular-async-loader/blob/master/sample/
 
 **index.html**
 
-```
+```html
 <script src="assets/requirejs/require.js"></script>
 <script src="bootstrap.js"></script>
 ```
@@ -101,15 +101,13 @@ define(function (require) {
                     dummy: app.load('./home/homeCtrl')
                 }
             })
-            .state('users', {
+            .state('users', app.route({
                 url: '/users',
                 templateUrl: 'users/users.html',
                 controller: 'usersCtrl',
-                resolve: {
-                    // async load controller, services, ...
-                    dummy: app.load(['./users/usersCtrl', './services/usersService'])
-                }
-            });
+                // async load controller
+                controllerUrl: '/users/usersCtrl'
+            }));
     }]);
 });
 ```
@@ -120,6 +118,7 @@ define(function (require) {
 define(function (require) {
     var app = require('../app');
 
+    // dynamic load services
     require('../services/usersService');
 
     app.controller('usersCtrl', ['$scope', function ($scope) {

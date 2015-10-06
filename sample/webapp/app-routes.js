@@ -15,16 +15,14 @@ define(function (require) {
                 templateUrl: 'home/home.html',
                 controller: 'homeCtrl',
                 resolve: {
-                    deps: app.load('./home/homeCtrl')
+                    deps: app.load('home/homeCtrl')
                 }
             })
-            .state('users', {
+            .state('users', app.route({
                 url: '/users',
                 templateUrl: 'users/users.html',
                 controller: 'usersCtrl',
-                resolve: {
-                    deps: app.load('./users/usersCtrl')
-                }
-            });
+                controllerUrl: 'users/usersCtrl'
+            }));
     }]);
 });
