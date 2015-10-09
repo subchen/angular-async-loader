@@ -99,23 +99,52 @@
                     };
                 }]);
 
+                // rewrite $routeProvider.when
+                if (app.requires && app.requires.indexOf('ngRoute') !== -1) {
+                    app.config(['$routeProvider', function ($routeProvider) {
+                        var whenFn = $routeProvider.when;
+                        $routeProvider.when = function(path, config) {
+                            return whenFn.call($routeProvider, path, app.route(config));
+                        };
+                    }]);
+                }
+                // rewrite $stateProvider.state
+                if (app.requires && app.requires.indexOf('ui.router') !== -1) {
+                    app.config(['$stateProvider', function ($stateProvider) {
+                        var stateFn = $stateProvider.state;
+                        $stateProvider.state = function(state, config) {
+                            return stateFn.call($stateProvider, state, app.route(config));
+                        };
+                    }]);
+                }
 
                 /**
-                 * Generate $routeProvider.route or $stateProvider.state.
+                 * Rewrite config for $routeProvider.when or $stateProvider.state.
                  *
                  * Populate the resolve attribute using either 'controllerUrl'.
                  *
-                 * @param config {Object}
+                 * @param {Object} config
                  * @returns the modified config
                  */
                 app.route = function (config) {
-                    var controllerUrl = config.controllerUrl;
-                    if (controllerUrl !== undefined) {
-                        delete config.controllerUrl;
+                    function rewriteViewConfig(config) {
+                        if (config.hasOwnProperty('controllerUrl')) {
+                            var controllerUrl = config.controllerUrl;
+                            delete config.controllerUrl;
 
-                        var resolve = config.resolve || {};
-                        resolve.dummyController = app.load(controllerUrl);
-                        config.resolve = resolve;
+                            var resolve = config.resolve || {};
+                            resolve.dummyController = app.load([controllerUrl]);
+                            config.resolve = resolve;
+                        }
+                    }
+
+                    // multiple views support
+                    if (config.hasOwnProperty('views')) {
+                        Object.keys(config.views).forEach(function(view) {
+                            rewriteViewConfig(config.views[view]);
+                        });
+                    } else {
+                        rewriteViewConfig(config);
                     }
 
                     return config;
@@ -126,7 +155,7 @@
                  * Load external resources, such as Controller, Service, etc.
                  *
                  * @param {String|Array} dependencies
-                 * @returns {*}
+                 * @returns {*} a promised function to ajax load resource
                  */
                 app.load = function (dependencies) {
                     if (!angular.isArray(dependencies)) {
@@ -148,10 +177,10 @@
                 var injector;
 
                 /**
-                 * Get angular injector object by name.
+                 * Get angular injector object by name in module scope.
                  *
                  * @param {String} name
-                 * @returns {*}
+                 * @returns {*} the injected object
                  */
                 app.get = function (name) {
                     if (injector === undefined) {
