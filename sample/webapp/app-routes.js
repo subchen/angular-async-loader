@@ -23,7 +23,7 @@ define(function (require) {
                 controller: 'usersCtrl',
 
                 /* 
-                // customize to load dependencies
+                // customize to load more dependencies
                 resolve: {
                     dummy: app.load([
                         'users/usersCtrl', // controller

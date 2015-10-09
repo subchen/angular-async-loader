@@ -2,6 +2,7 @@
  * async loader for angular 1.x.
  *
  * https://github.com/subchen/angular-async-loader
+ *
  * subchen@gmail.com
  */
 (function () {
@@ -9,7 +10,7 @@
     function factory(angular, undefined) {
 
         return {
-            VERSION: '1.0.1',
+            VERSION: '1.1.0',
 
             configure: function (app) {
 

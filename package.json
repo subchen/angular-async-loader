@@ -1,6 +1,6 @@
 {
   "name": "angular-async-loader",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "async loader for angular 1.x",
   "author": {
     "name": "Guoqiang Chen",
@@ -21,7 +21,9 @@
     "requirejs",
     "systemjs",
     "seajs",
-    "async"
+    "async",
+    "ui-router",
+    "ngRoute"
   ],
   "dependencies": {
   }

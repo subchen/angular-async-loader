@@ -3,24 +3,29 @@
 
 # angular-async-loader
 
-async loader for angular 1.x.
+An async loader for angular 1.x application.
 
 Support following components to dynamic register:
 
-* .controller
-* .services
-* .filter
-* .directive
-* .value
-* .constant
-* .provider
-* .decorator
+* `.controller`
+* `.services`
+* `.filter`
+* `.directive`
+* `.value`
+* `.constant`
+* `.provider`
+* `.decorator`
 
-And we can use following loaders:
+Support following amd/cmd loaders:
 
-* Require.js
-* Sea.js
-* System.js
+* `Require.js`
+* `Sea.js`
+* `System.js`
+
+Support `controllerUrl` config in `angular-ui-router` and `angular-route`:
+
+* `$stateProvider.state`
+* `$routeProvider.when`
 
 
 # Installation
@@ -107,7 +112,7 @@ define(function (require) {
                 controller: 'usersCtrl',
                 
                 /* 
-                // customize to load dependencies
+                // customize to load more dependencies
                 resolve: {
                     dummy: app.load([
                         'users/usersCtrl', // controller
