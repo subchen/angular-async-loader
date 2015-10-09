@@ -16,8 +16,7 @@
             if (typeof(require) === 'function') {
                 if (typeof(require.async) === 'function') {
                     return require.async;
-                }
-                else {
+                } else {
                     return require;
                 }
             } else if (typeof(seajs) === 'object' && typeof(seajs.use) === 'function') {
