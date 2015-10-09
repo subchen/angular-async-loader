@@ -95,18 +95,27 @@ define(function (require) {
             .state('home', {
                 url: '/home',
                 templateUrl: 'home/home.html',
-                controller: 'homeCtrl',
-                resolve: {
-                    // async load controller
-                    dummy: app.load('./home/homeCtrl')
-                }
+                // new attribute for ajax load controller js
+                controllerUrl: 'home/homeCtrl',
+                controller: 'homeCtrl'
             })
             .state('users', app.route({
                 url: '/users',
                 templateUrl: 'users/users.html',
+                // new attribute for ajax load controller js
+                controllerUrl: 'users/usersCtrl',
                 controller: 'usersCtrl',
-                // async load controller
-                controllerUrl: '/users/usersCtrl'
+                
+                /* 
+                // customize to load dependencies
+                resolve: {
+                    dummy: app.load([
+                        'users/usersCtrl', // controller
+                        'services/usersService' // service
+                        // filters, directives, ...
+                    ])
+                }
+                */
             }));
     }]);
 });
@@ -118,7 +127,7 @@ define(function (require) {
 define(function (require) {
     var app = require('../app');
 
-    // dynamic load services
+    // dynamic load services js
     require('../services/usersService');
 
     app.controller('usersCtrl', ['$scope', function ($scope) {
