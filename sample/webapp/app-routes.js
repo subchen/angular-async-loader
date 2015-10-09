@@ -16,22 +16,12 @@ define(function (require) {
                 controllerUrl: 'home/homeCtrl', // new attribute for ajax load controller js
                 controller: 'homeCtrl'
             })
-            .state('users', app.route({
+            .state('users', {
                 url: '/users',
                 templateUrl: 'users/users.html',
                 controllerUrl: 'users/usersCtrl', // new attribute for ajax load controller js
                 controller: 'usersCtrl',
-
-                /* 
-                // customize to load more dependencies
-                resolve: {
-                    dummy: app.load([
-                        'users/usersCtrl', // controller
-                        'services/usersService' // service
-                        // filters, directives, ...
-                    ])
-                }
-                */
-            }));
+                dependencies: ['services/usersService']
+            });
     }]);
 });
