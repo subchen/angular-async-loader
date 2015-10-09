@@ -35,7 +35,7 @@
          * @returns {*} a promised function to ajax load dependencies
          */
         function requireLoadFn(dependencies) {
-            if (typeof dependencies === 'string') {
+            if (typeof(dependencies) === 'string') {
                 dependencies = [dependencies];
             }
             return ['$q', '$rootScope', function($q, $rootScope) {
@@ -64,7 +64,7 @@
                     var dependencies = config.dependencies;
                     if (dependencies === undefined) {
                         dependencies = [];
-                    } else if (typeof dependencies === 'string') {
+                    } else if (typeof(dependencies) === 'string') {
                         dependencies = [dependencies];
                     }
                     if (config.controllerUrl) {
