@@ -13,14 +13,17 @@ define(function (require) {
             .state('home', {
                 url: '/home',
                 templateUrl: 'home/home.html',
-                controllerUrl: 'home/homeCtrl', // new attribute for ajax load controller js
+                 // new attribute for ajax load controller
+                controllerUrl: 'home/homeCtrl',
                 controller: 'homeCtrl'
             })
             .state('users', {
                 url: '/users',
                 templateUrl: 'users/users.html',
-                controllerUrl: 'users/usersCtrl', // new attribute for ajax load controller js
+                 // new attribute for ajax load controller
+                controllerUrl: 'users/usersCtrl',
                 controller: 'usersCtrl',
+                // load more controllers, services, filters, ...
                 dependencies: ['services/usersService']
             });
     }]);

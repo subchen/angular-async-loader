@@ -22,7 +22,7 @@ Support following amd/cmd loaders:
 * `Sea.js`
 * `System.js`
 
-Support `controllerUrl` config in `angular-ui-router` and `angular-route`:
+Support `controllerUrl/denpendencies` config in `angular-ui-router` and `angular-route`:
 
 * `$stateProvider.state`
 * `$routeProvider.when`
@@ -100,27 +100,18 @@ define(function (require) {
             .state('home', {
                 url: '/home',
                 templateUrl: 'home/home.html',
-                // new attribute for ajax load controller js
+                // new attribute for ajax load controller
                 controllerUrl: 'home/homeCtrl',
                 controller: 'homeCtrl'
             })
             .state('users', app.route({
                 url: '/users',
                 templateUrl: 'users/users.html',
-                // new attribute for ajax load controller js
+                // new attribute for ajax load controller
                 controllerUrl: 'users/usersCtrl',
                 controller: 'usersCtrl',
-                
-                /* 
-                // customize to load more dependencies
-                resolve: {
-                    dummy: app.load([
-                        'users/usersCtrl', // controller
-                        'services/usersService' // service
-                        // filters, directives, ...
-                    ])
-                }
-                */
+                // load more controllers, services, filters, ...
+                dependencies: ['services/usersService']
             }));
     }]);
 });
@@ -132,8 +123,8 @@ define(function (require) {
 define(function (require) {
     var app = require('../app');
 
-    // dynamic load services js
-    require('../services/usersService');
+    // dynamic load services here or add into dependencies of state config
+    // require('../services/usersService');
 
     app.controller('usersCtrl', ['$scope', function ($scope) {
         // shortcut to get angular injected service.

@@ -9,6 +9,8 @@
 
     function factory(angular, undefined) {
 
+        var VERSION = '1.2.0';
+
         // Support require.js, sea.js, system.js
         var amdRequire = (function() {
             if (typeof(require) === 'function') {
@@ -29,6 +31,7 @@
         /**
          * Load external dependencies, such as Controller, Service, etc.
          *
+         * @private
          * @param {String|Array} dependencies
          * @returns {*} a promised function to ajax load dependencies
          */
@@ -51,6 +54,7 @@
          *
          * Transform 'controllerUrl' and 'dependencies' attrs into resolve object.
          *
+         * @private
          * @param {Object} config
          * @returns {Object} the modified config
          */
@@ -90,8 +94,16 @@
 
 
         return {
-            VERSION: '1.1.0',
+            /**
+             * Version of npm package.
+             */
+            VERSION: VERSION,
 
+            /**
+             * Configure angular module instance to support async load components.
+             *
+             * @param {angular.Module} app
+             */
             configure: function(app) {
 
                 app.provider('$asyncLoader', [
