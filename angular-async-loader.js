@@ -21,8 +21,8 @@
                 }
             } else if (typeof(seajs) === 'object' && typeof(seajs.use) === 'function') {
                 return seajs.use;
-            } else if (typeof(System) === 'object' && typeof(System.import) === 'function') {
-                return System.import;
+            } else if (typeof(System) === 'object' && typeof(System.amdRequire) === 'function') {
+                return System.amdRequire;
             }
             throw new Error('No amd/cmd module loader found.');
         }());
