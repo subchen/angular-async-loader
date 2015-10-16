@@ -30,8 +30,16 @@ Support `controllerUrl/denpendencies` config in `angular-ui-router` and `angular
 
 # Installation
 
+NPM
+
 ```shell
 npm install angular-async-loader
+```
+
+BOWER
+
+```shell
+bower install https://github.com/subchen/angular-async-loader.git
 ```
 
 # Usage
