@@ -61,7 +61,7 @@ require.config({
     paths: {
         'angular': 'assets/angular/angular.min',
         'angular-ui-router': 'assets/angular-ui-router/release/angular-ui-router.min',
-        'angular-async-loader': 'assets/angular-async-loader/angular-async-loader'
+        'angular-async-loader': 'assets/angular-async-loader/dist/angular-async-loader.min'
     },
     shim: {
         'angular': {exports: 'angular'},

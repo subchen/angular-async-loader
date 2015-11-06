@@ -1,6 +1,6 @@
 {
   "name": "angular-async-loader",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "async loader for angular 1.x",
   "author": {
     "name": "Guoqiang Chen",
@@ -25,6 +25,11 @@
     "ui-router",
     "ngRoute"
   ],
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "uglifyjs": "^2.4.10"
+  },
+  "scripts": {
+    "dist": "cd ./dist; cp ../angular-async-loader.js ./; uglifyjs angular-async-loader.js -c -m -o angular-async-loader.min.js --source-map angular-async-loader.min.js.map"
   }
 }
