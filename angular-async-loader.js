@@ -9,7 +9,7 @@
 
     function factory(angular, undefined) {
 
-        var VERSION = '1.2.1';
+        var VERSION = '1.3.0';
 
         // Support require.js, sea.js, system.js
         var amdRequire = (function() {
@@ -104,31 +104,50 @@
              */
             configure: function(app) {
 
-                app.provider('$asyncLoader', [
-                             '$controllerProvider',
-                             '$compileProvider',
-                             '$provide',
-                             '$filterProvider',
-                     function($controllerProvider,
-                              $compileProvider,
-                              $provide,
-                              $filterProvider) {
+                app.provider('ngProviders', ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
+                    function($controllerProvider, $compileProvider, $filterProvider, $provide) {
                         this.$get = function() {
                             return {
                                 $controllerProvider: $controllerProvider,
                                 $compileProvider: $compileProvider,
-                                $provide: $provide,
-                                $filterProvider: $filterProvider
+                                $filterProvider: $filterProvider,
+                                $provide: $provide
                             };
                         };
                     }
                 ]);
 
-                app.run(['$asyncLoader', function($asyncLoader) {
-                    var $controllerProvider = $asyncLoader.$controllerProvider;
-                    var $compileProvider = $asyncLoader.$compileProvider;
-                    var $provide = $asyncLoader.$provide;
-                    var $filterProvider = $asyncLoader.$filterProvider;
+                app.run(['ngProviders', '$injector', function(ngProviders, $injector) {
+                    var $controllerProvider = ngProviders.$controllerProvider;
+                    var $compileProvider = ngProviders.$compileProvider;
+                    var $filterProvider = ngProviders.$filterProvider;
+                    var $provide = ngProviders.$provide;
+
+                    /**
+                     * Register an angular module for dependency.
+                     *
+                     * @param {String} name - module name
+                     */
+                    app.useModule = function (name) {
+                        var module = angular.module(name);
+                        if (module.requires) {
+                            for (var i = 0; i < module.requires.length; i++) {
+                                app.addModule(module.requires[i]);
+                            }
+                        }
+                        angular.forEach(module._invokeQueue, function(invokeArgs) {
+                            var provider = ngProviders[invokeArgs[0]];
+                            provider[invokeArgs[1]].apply(provider, invokeArgs[2]);
+                        });
+                        angular.forEach(module._configBlocks, function(fn) {
+                            $injector.invoke(fn);
+                        });
+                        angular.forEach(module._runBlocks, function(fn) {
+                            $injector.invoke(fn);
+                        });
+
+                        return app;
+                    };
 
                     app.value = function(name, value) {
                         $provide.value(name, value);
@@ -174,6 +193,17 @@
                         $provide.provider(name, service);
                         return app;
                     };
+
+                    /**
+                     * Get angular injector object by name in module scope.
+                     *
+                     * @param {String} name
+                     * @returns {*} the injected object
+                     */
+                    app.get = function(name) {
+                        return $injector.get(name);
+                    };
+
                 }]);
 
                 // rewrite $routeProvider.when
@@ -194,29 +224,6 @@
                         };
                     }]);
                 }
-
-
-                var injector;
-
-                /**
-                 * Get angular injector object by name in module scope.
-                 *
-                 * @param {String} name
-                 * @returns {*} the injected object
-                 */
-                app.get = function(name) {
-                    if (injector === undefined) {
-                        var elements = [app.element, document, 'html', 'body'];
-                        for (var i = 0; i < elements.length; i++) {
-                            injector = angular.element(elements[i]).injector();
-                            if (injector !== undefined) {
-                                break;
-                            }
-                        }
-                    }
-                    return injector.get(name);
-                };
-
             }
         };
     }
