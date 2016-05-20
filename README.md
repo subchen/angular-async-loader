@@ -65,8 +65,9 @@ require.config({
     paths: {
         'angular': 'assets/angular/angular.min',
         'angular-ui-router': 'assets/angular-ui-router/release/angular-ui-router.min',
-        'angular-ui-mask': 'assets/angular-ui-mask/dist/mask',
-        'angular-async-loader': 'assets/angular-async-loader/dist/angular-async-loader.min'
+        'angular-async-loader': 'assets/angular-async-loader/angular-async-loader.min',
+        'angular-ui-mask': 'assets/angular-ui-mask/dist/mask.min',
+        'ng-tags-input': 'assets/ng-tags-input/build/ng-tags-input.min'
     },
     shim: {
         'angular': {exports: 'angular'},
@@ -179,7 +180,7 @@ define(function (require) {
 
 # Build from Source
 
-```
+```bash
 git clone https://github.com/subchen/angular-async-loader.git
 
 cd angular-async-loader
