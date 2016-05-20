@@ -1,6 +1,6 @@
 {
   "name": "angular-async-loader",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "async loader for angular 1.x",
   "author": {
     "name": "Guoqiang Chen",
@@ -27,9 +27,11 @@
   ],
   "dependencies": {},
   "devDependencies": {
+    "browser-sync": "^2.12.8",
     "uglifyjs": "^2.4.10"
   },
   "scripts": {
-    "dist": "cd ./dist; cp ../angular-async-loader.js ./; uglifyjs angular-async-loader.js -c -m -o angular-async-loader.min.js --source-map angular-async-loader.min.js.map"
+    "build": "./build.sh",
+    "start": "browser-sync start -s demo --files demo"
   }
 }
