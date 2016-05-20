@@ -1,7 +1,11 @@
 define(function (require) {
+    var angular = require('angular');
     var app = require('../app');
 
-    app.service('usersService', function () {
+    // put into a new module for demo
+    var module = angular.module('my.mod.1', []);
+
+    module.service('usersService', function () {
         return {
             list: function () {
                 return [
@@ -16,4 +20,6 @@ define(function (require) {
             }
         };
     });
+
+    app.useModule('my.mod.1');
 });

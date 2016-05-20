@@ -25,6 +25,13 @@ define(function (require) {
                 controller: 'usersCtrl',
                 // load more controllers, services, filters, ...
                 dependencies: ['services/usersService']
+            })
+            .state('components', {
+                url: '/components',
+                templateUrl: 'components/components.html',
+                 // new attribute for ajax load controller
+                controllerUrl: 'components/componentsCtrl',
+                controller: 'componentsCtrl'
             });
     }]);
 });

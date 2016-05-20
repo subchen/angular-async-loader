@@ -1,14 +1,12 @@
 {
-  "name": "angular-async-loader-sample",
+  "name": "angular-async-loader-demo",
   "version": "1.0.0",
   "dependencies": {
     "angular": "^1.4.7",
     "angular-async-loader": "file:..",
+    "angular-ui-mask": "^1.8.4",
     "angular-ui-router": "^0.2.15",
-    "express": "^4.13.3",
+    "ng-tags-input": "^3.0.0",
     "requirejs": "^2.1.20"
-  },
-  "scripts": {
-    "start": "node server.js"
   }
 }
