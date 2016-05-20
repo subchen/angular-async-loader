@@ -5,16 +5,19 @@
 
 An async loader for angular 1.x application.
 
-Support following components to dynamic register:
+Support use dynamic angular module:
+* `app.useModule(name)`
 
-* `.controller`
-* `.services`
-* `.filter`
-* `.directive`
-* `.value`
-* `.constant`
-* `.provider`
-* `.decorator`
+Support use origin methods to dynamic register angular components:
+
+* `app.controller`
+* `app.services`
+* `app.filter`
+* `app.directive`
+* `app.value`
+* `app.constant`
+* `app.provider`
+* `app.decorator`
 
 Support following amd/cmd loaders:
 
@@ -27,24 +30,25 @@ Support `controllerUrl/denpendencies` config in `angular-ui-router` and `angular
 * `$stateProvider.state`
 * `$routeProvider.when`
 
+# Demo
+
+http://subchen.github.io/angular-async-loader/
 
 # Installation
 
-NPM
+npm
 
 ```shell
 npm install angular-async-loader
 ```
 
-BOWER
+bower
 
 ```shell
 bower install https://github.com/subchen/angular-async-loader.git
 ```
 
 # Usage
-
-See Sample: https://github.com/subchen/angular-async-loader/blob/master/sample/
 
 **index.html**
 
@@ -61,6 +65,7 @@ require.config({
     paths: {
         'angular': 'assets/angular/angular.min',
         'angular-ui-router': 'assets/angular-ui-router/release/angular-ui-router.min',
+        'angular-ui-mask': 'assets/angular-ui-mask/dist/mask',
         'angular-async-loader': 'assets/angular-async-loader/dist/angular-async-loader.min'
     },
     shim: {
@@ -88,7 +93,7 @@ define(function (require, exports, module) {
 
     var app = angular.module('app', ['ui.router']);
 
-    // initialze app module for async loader
+    // initialze app module for angular-async-loader
     asyncLoader.configure(app);
 
     module.exports = app;
@@ -112,15 +117,22 @@ define(function (require) {
                 controllerUrl: 'home/homeCtrl',
                 controller: 'homeCtrl'
             })
-            .state('users', app.route({
+            .state('users', {
                 url: '/users',
                 templateUrl: 'users/users.html',
                 // new attribute for ajax load controller
                 controllerUrl: 'users/usersCtrl',
                 controller: 'usersCtrl',
-                // load more controllers, services, filters, ...
+                // support to load more controllers, services, filters, ...
                 dependencies: ['services/usersService']
-            }));
+            })
+            .state('components', {
+                url: '/components',
+                templateUrl: 'components/components.html',
+                // new attribute for ajax load controller
+                controllerUrl: 'components/componentsCtrl',
+                controller: 'componentsCtrl'
+            });
     }]);
 });
 ```
@@ -131,17 +143,51 @@ define(function (require) {
 define(function (require) {
     var app = require('../app');
 
-    // dynamic load services here or add into dependencies of state config
+    // dynamic load services here or add into dependencies of ui-router state config
     // require('../services/usersService');
 
     app.controller('usersCtrl', ['$scope', function ($scope) {
         // shortcut to get angular injected service.
         var userServices = app.get('usersService');
-
         $scope.userList = usersService.list();
     }]);
 
 });
+```
+
+**components/componentsCtrl.js**
+
+```js
+define(function (require) {
+    var app = require('../app');
+
+    // dynamic load angular-ui-mask plugins for UI
+    require('angular-ui-mask');
+    app.useModule('ui.mask');
+
+    // dynamic load ng-tags-input plugins for UI
+    require('ng-tags-input');
+    app.useModule('ngTagsInput');
+
+    app.controller('componentsCtrl', ['$scope', function ($scope) {
+        ......
+    }]);
+
+});
+```
+
+
+# Build from Source
+
+```
+git clone https://github.com/subchen/angular-async-loader.git
+
+cd angular-async-loader
+
+npm run build
+npm start
+
+open browser http://localhost:3000/
 ```
 
 # License
@@ -149,7 +195,7 @@ define(function (require) {
 Released under the [Apache 2 License](http://www.apache.org/licenses/LICENSE-2.0).
 
 ```
-Copyright 2015 Guoqiang Chen
+Copyright 2015-2016 Guoqiang Chen
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
