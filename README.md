@@ -32,7 +32,7 @@ Support `controllerUrl/denpendencies` config in `angular-ui-router` and `angular
 
 # Demo
 
-http://subchen.github.io/angular-async-loader/
+http://subchen.github.io/angular-async-loader/demo/
 
 # Installation
 
