@@ -22,7 +22,7 @@
     "node_modules",
     "bower_components",
     "demo",
-    "build.sh"
+    "make.sh"
   ]
 }
 

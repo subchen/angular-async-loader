@@ -4,3 +4,5 @@ demo/
 
 .DS_Store
 .gitignore
+
+make.sh

@@ -185,8 +185,8 @@ git clone https://github.com/subchen/angular-async-loader.git
 
 cd angular-async-loader
 
-npm run build
-npm start
+./make.sh install
+./make.sh test
 
 open browser http://localhost:3000/
 ```

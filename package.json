@@ -25,10 +25,5 @@
     "ui-router",
     "ngRoute"
   ],
-  "dependencies": {},
-  "devDependencies": {},
-  "scripts": {
-    "build": "./build.sh",
-    "start": "npm install browser-sync && browser-sync start -s demo --files demo"
-  }
+  "dependencies": {}
 }
