@@ -4,7 +4,7 @@ set -e
 
 appdir=$(cd $(dirname $0); pwd)
 
-cd $appdir && npm install
+cd $appdir && npm install uglifyjs
 
 $appdir/node_modules/.bin/uglifyjs \
     angular-async-loader.js -c -m \

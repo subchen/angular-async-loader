@@ -1,7 +1,7 @@
 {
   "name": "angular-async-loader",
   "version": "1.3.0",
-  "description": "async loader for angular 1.x",
+  "description": "async loader for angular 1.x application",
   "author": {
     "name": "Guoqiang Chen",
     "email": "subchen@gmail.com",
@@ -26,12 +26,9 @@
     "ngRoute"
   ],
   "dependencies": {},
-  "devDependencies": {
-    "browser-sync": "^2.12.8",
-    "uglifyjs": "^2.4.10"
-  },
+  "devDependencies": {},
   "scripts": {
     "build": "./build.sh",
-    "start": "browser-sync start -s demo --files demo"
+    "start": "npm install browser-sync && browser-sync start -s demo --files demo"
   }
 }
