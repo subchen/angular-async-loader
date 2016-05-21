@@ -3,12 +3,12 @@
 
 # angular-async-loader
 
-An async loader for angular 1.x application.
+Load modules and components asynchronously for angular 1.x application.
 
-Support use dynamic angular module:
+Support load angular modules:
 * `app.useModule(name)`
 
-Support use origin methods to dynamic register angular components:
+Support load angular components:
 
 * `app.controller`
 * `app.services`

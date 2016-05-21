@@ -5,7 +5,7 @@
   "authors": [
     "Guoqiang Chen <subchen@gmail.com>"
   ],
-  "description": "async loader for angular 1.x application",
+  "description": "Load modules and components asynchronously for angular 1.x application",
   "main": "angular-async-loader.js",
   "keywords": [
     "angular",
