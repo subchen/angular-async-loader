@@ -132,7 +132,7 @@
                         var module = angular.module(name);
                         if (module.requires) {
                             for (var i = 0; i < module.requires.length; i++) {
-                                app.addModule(module.requires[i]);
+                                app.useModule(module.requires[i]);
                             }
                         }
                         angular.forEach(module._invokeQueue, function(invokeArgs) {
