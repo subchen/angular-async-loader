@@ -1,0 +1,28 @@
+{
+  "name": "angular-async-loader",
+  "version": "1.3.0",
+  "homepage": "https://github.com/subchen/angular-async-loader",
+  "authors": [
+    "Guoqiang Chen <subchen@gmail.com>"
+  ],
+  "description": "async loader for angular 1.x application",
+  "main": "angular-async-loader.js",
+  "keywords": [
+    "angular",
+    "requirejs",
+    "systemjs",
+    "seajs",
+    "async",
+    "ui-router",
+    "ngRoute"
+  ],
+  "license": "Apache-2.0",
+  "ignore": [
+    ".*",
+    "node_modules",
+    "bower_components",
+    "demo",
+    "build.sh"
+  ]
+}
+
