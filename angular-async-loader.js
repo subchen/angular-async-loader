@@ -104,14 +104,15 @@
              */
             configure: function(app) {
 
-                app.provider('ngProviders', ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
-                    function($controllerProvider, $compileProvider, $filterProvider, $provide) {
+                app.provider('ngProviders', ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$injector',
+                    function($controllerProvider, $compileProvider, $filterProvider, $provide, $injector) {
                         this.$get = function() {
                             return {
                                 $controllerProvider: $controllerProvider,
                                 $compileProvider: $compileProvider,
                                 $filterProvider: $filterProvider,
-                                $provide: $provide
+                                $provide: $provide,
+                                $injector: $injector
                             };
                         };
                     }
@@ -130,20 +131,22 @@
                      */
                     app.useModule = function (name) {
                         var module = angular.module(name);
+
                         if (module.requires) {
                             for (var i = 0; i < module.requires.length; i++) {
                                 app.useModule(module.requires[i]);
                             }
                         }
-                        angular.forEach(module._invokeQueue, function(invokeArgs) {
-                            var provider = ngProviders[invokeArgs[0]];
-                            provider[invokeArgs[1]].apply(provider, invokeArgs[2]);
+                        angular.forEach(module._invokeQueue, function(args) {
+                            var provider = ngProviders[args[0]] || $injector.get(args[0]);
+                            provider[args[1]].apply(provider, args[2]);
                         });
-                        angular.forEach(module._configBlocks, function(fn) {
-                            $injector.invoke(fn);
+                        angular.forEach(module._configBlocks, function(args) {
+                            var provider = ngProviders.$injector.get(args[0]);
+                            provider[args[1]].apply(provider, args[2]);
                         });
-                        angular.forEach(module._runBlocks, function(fn) {
-                            $injector.invoke(fn);
+                        angular.forEach(module._runBlocks, function(args) {
+                            $injector.invoke(args);
                         });
 
                         return app;
