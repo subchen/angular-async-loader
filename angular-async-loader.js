@@ -1,5 +1,5 @@
 /**
- * async loader for angular 1.x.
+ * Load modules and components asynchronously for angular 1.x application.
  *
  * https://github.com/subchen/angular-async-loader
  *
@@ -9,7 +9,7 @@
 
     function factory(angular, undefined) {
 
-        var VERSION = '1.3.0';
+        var VERSION = '1.3.1';
 
         // Support require.js, sea.js, system.js
         var amdRequire = (function() {
