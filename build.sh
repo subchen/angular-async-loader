@@ -33,4 +33,6 @@ mkdir -p assets/ng-tags-input/build/
 cp node_modules/ng-tags-input/build/ng-tags-input.min.js assets/ng-tags-input/build/
 cp node_modules/ng-tags-input/build/ng-tags-input.min.css assets/ng-tags-input/build/
 
+mkdir -p assets/ng-file-upload/dist/
+cp node_modules/ng-file-upload/dist/ng-file-upload-all.min.js assets/ng-file-upload/dist/
 

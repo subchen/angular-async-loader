@@ -9,6 +9,10 @@ define(function (require) {
     require('ng-tags-input');
     app.useModule('ngTagsInput');
 
+    // dynamic load ng-file-upload plugins for UI
+    require('ng-file-upload');
+    app.useModule('ngFileUpload');
+
     app.controller('componentsCtrl', ['$scope', function ($scope) {
         $scope.name = 'UI Components';
 
