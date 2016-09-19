@@ -58,33 +58,36 @@
          */
         function route(config) {
 
-            function rewriteConfig(config) {
-                if (config.hasOwnProperty('controllerUrl') || config.hasOwnProperty('dependencies')) {
-                    var dependencies = config.dependencies;
-                    if (dependencies === undefined) {
-                        dependencies = [];
-                    } else if (typeof(dependencies) === 'string') {
-                        dependencies = [dependencies];
+            function collectDependencies(config, dependencies) {
+                 if (config.controllerUrl) {
+                    dependencies.push(config.controllerUrl);
+                    //delete config.controllerUrl;
+                 }
+                 if (config.dependencies) {
+                    if (typeof(config.dependencies) === 'string') {
+                        dependencies.push(config.dependencies);
+                    } else {
+                        [].push.apply(dependencies, config.dependencies);
                     }
-                    if (config.controllerUrl) {
-                        dependencies.push(config.controllerUrl);
-                    }
-                    delete config.dependencies;
-                    delete config.controllerUrl;
-
-                    var resolve = config.resolve || {};
-                    resolve['$dummy'] = resolveDependencies(dependencies);
-                    config.resolve = resolve;
+                    //delete config.dependencies;
                 }
             }
 
-            // multiple views support
+            var dependencies = [];
+
+            collectDependencies(config, dependencies);
+
             if (config.hasOwnProperty('views')) {
+                // multiple views support
                 Object.keys(config.views).forEach(function(view) {
-                    rewriteConfig(config.views[view]);
+                    collectDependencies(config.views[view], dependencies);
                 });
-            } else {
-                rewriteConfig(config);
+            }
+
+            if (dependencies.length > 0) {
+                var resolve = config.resolve || {};
+                resolve['$dummy'] = resolveDependencies(dependencies);
+                config.resolve = resolve;
             }
 
             return config;
