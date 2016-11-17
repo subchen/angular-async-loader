@@ -212,24 +212,38 @@
 
                 }]);
 
-                // rewrite $routeProvider.when
-                if (app.requires && app.requires.indexOf('ngRoute') !== -1) {
-                    app.config(['$routeProvider', function($routeProvider) {
-                        var whenFn = $routeProvider.when;
-                        $routeProvider.when = function(path, config) {
-                            return whenFn.call($routeProvider, path, route(config));
-                        };
-                    }]);
+
+                // rewrite router
+                function rewriteRoute(requires) {
+                    if (requires.length == 0) {
+                        return;
+                    }
+                    for (var i = 0; i < requires.length; i++) {
+
+                        //rewrite $routeProvider.when
+                        if (requires[i] === 'ui.router') {
+                            app.config(['$stateProvider', function ($stateProvider) {
+                                var stateFn = $stateProvider.state;
+                                $stateProvider.state = function (state, config) {
+                                    return stateFn.call($stateProvider, state, route(config));
+                                };
+                            }]);
+                        }
+
+                        // rewrite $stateProvider.state
+                        if (requires[i] === 'ngRoute') {
+                            app.config(['$routeProvider', function ($routeProvider) {
+                                var whenFn = $routeProvider.when;
+                                $routeProvider.when = function (path, config) {
+                                    return whenFn.call($routeProvider, path, route(config));
+                                };
+                            }]);
+                        }
+                        rewriteRoute(app.module(requires[i]).requires);
+
+                    }
                 }
-                // rewrite $stateProvider.state
-                if (app.requires && app.requires.indexOf('ui.router') !== -1) {
-                    app.config(['$stateProvider', function($stateProvider) {
-                        var stateFn = $stateProvider.state;
-                        $stateProvider.state = function(state, config) {
-                            return stateFn.call($stateProvider, state, route(config));
-                        };
-                    }]);
-                }
+                rewriteRoute(app.requires);
             }
         };
     }
