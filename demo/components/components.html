@@ -1,0 +1,35 @@
+<p>Welcome to <b>{{name}}</b> Page.</p>
+
+<h2>Load 'ui.mask' module</h2>
+<div>
+    <input type="text" ng-model="phonenumber" size="30"
+           ui-mask="(999) 999-9999" ui-mask-placeholder ui-mask-placeholder-char="_" />
+</div>
+
+<h2>Load 'ngTagsInput' module</h2>
+<div>
+    <link rel="stylesheet" href="assets/ng-tags-input/build/ng-tags-input.min.css" />
+
+    <tags-input ng-model="tags" display-property="name" placeholder="Add a country" replace-spaces-with-dashes="false" style="width:300px;">
+        <auto-complete source="countries"
+                       min-length="0"
+                       load-on-focus="true"
+                       load-on-empty="true"
+                       max-results-to-show="32"
+                       template="my-custom-template"></auto-complete>
+    </tags-input>
+</div>
+
+<script type="text/ng-template" id="my-custom-template">
+<div>
+    <span ng-bind-html="$highlight($getDisplayText())"></span>
+    <span>({{data.rank}})</span>
+    <span>{{data.confederation}}</span>
+</div>
+</script>
+
+<h2>Load 'ngFileUpload' module</h2>
+<button ngf-select ng-model="file" ngf-max-size="5MB" ngf-min-height="100">
+    Select Upload File
+</button>
+

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>angular-async-loader demo</title>
+</head>
+<body>
+
+<p>
+Router: $state = {{$state.current.name}}
+</p>
+
+<p>
+Navigate Menu: <a ui-sref="home">Home</a> | <a ui-sref="users">User List</a> | <a ui-sref="components">UI Components</a>
+</p>
+
+<div style="border:1px solid #ccc; min-height:200px; padding:20px;">
+    <div ui-view></div>
+</div>
+
+<div style="border-top:1px solid #ccc; margin:20px 0; padding:10px 0;">
+Github: <a href="https://github.com/subchen/angular-async-loader">https://github.com/subchen/angular-async-loader</a>
+</div>
+
+<script src="assets/requirejs/require.js"></script>
+<script src="bootstrap.js"></script>
+
+</body>
+</html>
+
