@@ -72,7 +72,7 @@ test() {
         npm install browser-sync
     fi
 
-    ./node_modules/.bin/browser-sync start -s demo --files demo
+    ./node_modules/.bin/browser-sync start -s website/demo --files website/demo
 }
 
 case "$1" in
