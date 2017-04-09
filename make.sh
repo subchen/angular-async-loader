@@ -2,15 +2,15 @@
 
 set -e
 
-appdir=$(cd $(dirname $0); pwd)
+root=$(cd $(dirname $0); pwd)
 
 clean() {
-    rm -rf $appdir/node_modules
-    rm -rf $appdir/demo/node_modules
+    rm -rf $root/node_modules
+    rm -rf $root/demo/node_modules
 }
 
 install() {
-    cd $appdir
+    cd $root
 
     if [ ! -f "./node_modules/.bin/uglifyjs" ]; then
         npm install uglifyjs
@@ -22,7 +22,7 @@ install() {
         --source-map angular-async-loader.min.js.map
 
 
-    cd $appdir/demo
+    cd $root/website/demo
 
     if [ ! -d "./node_modules" ]; then
         npm install
@@ -48,11 +48,25 @@ install() {
     fi
 
     mkdir -p assets/angular-async-loader/
-    cp ../angular-async-loader.min.js assets/angular-async-loader/
+    cp $root/angular-async-loader.min.js assets/angular-async-loader/
+}
+
+build_website() {
+    cd $root
+    git branch -D gh-pages || true
+    git checkout --orphan gh-pages
+
+    mv ./website /tmp/
+    git reset --hard
+    mv /tmp/website/* ./
+    git add --all
+    git commit -m "Update website"
+
+    git checkout master
 }
 
 test() {
-    cd $appdir
+    cd $root
 
     if [ ! -f "./node_modules/.bin/browser-sync" ]; then
         npm install browser-sync
@@ -67,6 +81,9 @@ case "$1" in
         ;;
     install)
         install
+        ;;
+    website)
+        build_website
         ;;
     test)
         test
