@@ -6,7 +6,7 @@ root=$(cd $(dirname $0); pwd)
 
 clean() {
     rm -rf $root/node_modules
-    rm -rf $root/demo/node_modules
+    rm -rf $root/website/demo/node_modules
 }
 
 install() {
